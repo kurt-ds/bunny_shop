@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
 
         $breeds->each(function($breedName) {
             $category = Category::factory()->create([
-                'name' => "breedName",
+                'name' => $breedName,
                 'slug' => Str::slug($breedName),
             ]);
 
