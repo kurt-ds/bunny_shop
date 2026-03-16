@@ -16,7 +16,8 @@ class BunnyResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'category' => $this->category->name ?? "Uncategorized",
+            'category_id' => $this->category_id,
+            'category' => $this->category->slug ?? "Uncategorized",
             'name' => $this->name,
             'price' => (float) $this->price,
             'image_url' => asset("image_url"),

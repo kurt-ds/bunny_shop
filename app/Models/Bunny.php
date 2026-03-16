@@ -30,6 +30,16 @@ class Bunny extends Model
         ];
     }
 
+    public function scopeSearch($query, $name)
+    {
+        return $query->where('name', 'like', "%{$name}%");
+    }
+
+    public function scopeOfCategory($query, $categoryId)
+    {
+        return $query->where('category_id', $categoryId);
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
