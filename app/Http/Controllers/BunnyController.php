@@ -47,19 +47,47 @@ class BunnyController extends Controller
             'is_sold' => 'required|boolean'
         ]);
 
-        //ERROR HANDLING
-        if ($request->hasFile('image')) {
-            // This stores the file in storage/app/public/bunnies
-            // and returns the path (e.g., "bunnies/xyz.jpg")
-            $path = $request->file('image')->store('bunnies', 'public');
-                
-            // Add the path to the validated data array
-            $validated['image_url'] = $path;
+        //Upload the Image to Storage and Get a URL
+
 
         //INSERTION
 
         $bunny = Bunny::create($validated);
 
         return new BunnyResource($bunny);
+        }
+
+    public function destroy($id) {
+        $bunny = Bunny::findOrFail($id);
+
+        //DELETE THE IMAGE FROM STORAGE FIRST
+
+        $bunny->delete();
+
+
+        return response()->json(['message' => 'Bunny deleted successfully'], 200);
+    }
+
+    public function update(Request $request, $id) {
+        //VALIDATION
+
+        $validated = $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0|max:99999.99',
+            'age_months' => 'required|numeric|min:0|max:12',
+            'gender' => 'required|in:male,female',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'description' => 'required|string|max:1000',
+            'is_sold' => 'required|boolean'
+        ]);
+
+        $bunny = Bunny::findOrFail($id);
+
+        $bunny->update($validated);
+
+
+        return new BunnyResource($bunny);
     }
 }
+
