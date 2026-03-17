@@ -25,7 +25,12 @@
 
                 Explore the Burrow
             </div>
-            <BunnyList :bunnies="bunnies" :loading="loading" />
+            <BunnyList
+                :bunnies="bunnies"
+                :loading="loading"
+                :pagination="paginationMeta"
+                @change-page="fetchBunnies"
+            />
         </div>
     </Main>
 </template>
@@ -37,17 +42,24 @@ import Main from "../Layout/Main.vue";
 import BunnyList from "@/Components/Bunny/BunnyList.vue";
 
 const bunnies = ref([]);
+const paginationMeta = ref(null);
 const loading = ref(true);
 
-onMounted(async () => {
+const fetchBunnies = async (url = "/api/bunnies") => {
+    console.log("Requesting URL:", url);
     try {
-        const response = await axios.get("/api/bunnies");
+        const response = await axios.get(url);
 
         bunnies.value = response.data.data;
+        paginationMeta.value = response.data;
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
         console.error("Fetch failed", error);
     } finally {
         loading.value = false;
     }
-});
+};
+
+onMounted(() => fetchBunnies());
 </script>
