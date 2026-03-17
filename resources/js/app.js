@@ -1,11 +1,14 @@
-import './bootstrap'; // This loads Axios automatically in Laravel
-import { createApp } from 'vue';
-import BunnyList from './components/BunnyList.vue';
+import './bootstrap';
+import { createApp, h } from 'vue';
+import { createInertiaApp } from '@inertiajs/vue3';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
-const app = createApp({});
-
-// Register your component
-app.component('bunny-list', BunnyList);
-
-// Mount it to the div with id="app"
-app.mount('#app');
+createInertiaApp({
+    // This tells Inertia where to find your Index.vue file
+    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+    setup({ el, App, props, plugin }) {
+        createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .mount(el);
+    },
+});

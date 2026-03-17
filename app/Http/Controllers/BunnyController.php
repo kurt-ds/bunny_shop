@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bunny;
 use Illuminate\Http\Request;
 use App\Http\Resources\BunnyResource;
+use Inertia\Inertia;
 
 class BunnyController extends Controller
 {
@@ -92,7 +93,7 @@ class BunnyController extends Controller
 
 
     public function showPage() {
-        return view('bunnies');
+        return Inertia::render('Bunnies/Index');
     }
 }
 
