@@ -25,12 +25,17 @@
 
                 Explore the Burrow
             </div>
-            <BunnyList
-                :bunnies="bunnies"
-                :loading="loading"
-                :pagination="paginationMeta"
-                @change-page="fetchBunnies"
-            />
+
+            <div class="flex gap-5">
+                <FilterSearch @filter-changed="handleFilter" />
+
+                <BunnyList
+                    :bunnies="bunnies"
+                    :loading="loading"
+                    :pagination="paginationMeta"
+                    @change-page="fetchBunnies"
+                />
+            </div>
         </div>
     </Main>
 </template>
@@ -40,15 +45,25 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import Main from "../Layout/Main.vue";
 import BunnyList from "@/Components/Bunny/BunnyList.vue";
+import FilterSearch from "@/Components/FilterSearch.vue";
 
 const bunnies = ref([]);
 const paginationMeta = ref(null);
 const loading = ref(true);
+const filters = ref({
+    search: "",
+    category: null,
+});
 
 const fetchBunnies = async (url = "/api/bunnies") => {
-    console.log("Requesting URL:", url);
     try {
-        const response = await axios.get(url);
+        const response = await axios.get(url, {
+            params: {
+                search: filters.value.search,
+                category: filters.value.category,
+            },
+        });
+        console.log(filters.value.category);
 
         bunnies.value = response.data.data;
         paginationMeta.value = response.data;
@@ -59,6 +74,11 @@ const fetchBunnies = async (url = "/api/bunnies") => {
     } finally {
         loading.value = false;
     }
+};
+
+const handleFilter = (newFilters) => {
+    filters.value = { ...filters.value, ...newFilters };
+    fetchBunnies();
 };
 
 onMounted(() => fetchBunnies());

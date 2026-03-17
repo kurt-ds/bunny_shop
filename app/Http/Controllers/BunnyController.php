@@ -20,8 +20,8 @@ class BunnyController extends Controller
                 $query->search($request->input('search'));
             }
 
-            if ($request->filled('category_id')) {
-                $query->ofCategory($request->input('category_id'));
+            if ($request->filled('category')) {
+                $query->ofCategory($request->input('category'));
             }
 
             // 3. Call paginate() on the $query instance that has the filters applied
