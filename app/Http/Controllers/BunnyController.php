@@ -89,5 +89,10 @@ class BunnyController extends Controller
 
         return new BunnyResource($bunny);
     }
+
+
+    public function showPage() {
+        return view('bunnies');
+    }
 }
 

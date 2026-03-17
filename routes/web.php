@@ -6,7 +6,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::resource('bunnies', BunnyController::class);
+Route::get('/bunnies', [BunnyController::class, 'showPage']);
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
