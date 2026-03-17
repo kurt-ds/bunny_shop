@@ -1,10 +1,31 @@
 <template>
-    <h2>{{ bunny.name }}</h2>
-    <div v-html="bunny.description"></div>
+    <div
+        class="mt-5 min-w-[280px] shadow-2xl text-secondary p-4 rounded-xl flex flex-col gap-2"
+    >
+        <img
+            :src="`/storage/${bunny.image_url}`"
+            alt="{{ bunny.name }}'s' Image"
+            @error="setDefaultImage"
+            class="rounded-lg w-full h-[185px] object-cover"
+        />
+        <h2 class="font-bold">{{ bunny.name }}</h2>
+        <p class="text-sm">
+            {{ bunny.category_name }} &bull; {{ bunny.age }} months
+        </p>
+        <p class="text-lg font-bold text-tertiary">&dollar;{{ bunny.price }}</p>
+
+        <button class="bg-tertiary text-white font-bold p-2 rounded-lg">
+            View Details
+        </button>
+    </div>
 </template>
 
 <script setup>
 defineProps({
     bunny: Object,
 });
+
+const setDefaultImage = (e) => {
+    e.target.src = "/storage/bunnies/placeholder.jpg";
+};
 </script>

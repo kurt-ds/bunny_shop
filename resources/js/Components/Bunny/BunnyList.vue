@@ -6,7 +6,7 @@
         Loading from API...
     </div>
 
-    <div v-else-if="bunnies.length > 0">
+    <div v-else-if="bunnies.length > 0" class="flex gap-2">
         <BunnyCard v-for="bunny in bunnies" :key="bunny.id" :bunny="bunny" />
     </div>
 
