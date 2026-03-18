@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\CategoryResource;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
    
 class CategoryController extends Controller
@@ -14,6 +15,27 @@ class CategoryController extends Controller
         $categories = Category::all();
 
         return CategoryResource::collection($categories);
+    }
+
+    public function store(Request $request) {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|max:255',
+                'description' => 'required|max:1000'
+            ]);
+
+            $validated['slug'] = Str::slug($validated['name']);
+
+            $category = Category::create($validated);
+
+            return new CategoryResource($category);
+
+        } catch (e) {
+            return response()->json([
+                'message' => 'Failed to add bunny!',
+                'error' => e.getMessage()
+            ], 500);
+        }
     }
 
     public function showPage() {

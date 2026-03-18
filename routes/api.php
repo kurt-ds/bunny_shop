@@ -17,3 +17,4 @@ Route::delete('/bunnies/{bunny}', [BunnyController::class, 'destroy']);
 Route::put('/bunnies/{bunny}', [BunnyController::class, 'update']);
 
 Route::get('/categories', [CategoryController::class, 'index']);
+Route::post('/categories', [CategoryController::class, 'store']);
