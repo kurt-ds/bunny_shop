@@ -57,12 +57,53 @@ class CategoryController extends Controller
         }
     }
 
+    public function show($id) {
+        try {
+            $category = Category::findOrFail($id);
+
+            return new CategoryResource($category);
+        } catch (e) {
+            return response()->json([
+                'message' => 'Fetching category failed!',
+                'error' => e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function update(Request $request, $id) {
+        try {
+            $category = Category::findOrFail($id);
+
+            $validated = $request->validate([
+                'name' => 'required|max:255',
+                'description' => 'required|max:1000'
+            ]);
+
+
+            $category->update($validated);
+
+            return new CategoryResource($category);
+
+        } catch (e) {
+            return response()->json([
+                'message' => 'Failed to update bunny!',
+                'error' => e.getMessage()
+            ], 500);
+        }
+    }
+
     public function showPage() {
         return Inertia::render('Categories/Index');
     }
 
     public function showAddCategory() {
         return Inertia::render('Categories/Create');
+    }
+
+    public function showEditCategory($id) {
+        return Inertia::render('Categories/Edit', [
+            'id'=> $id
+        ]);
     }
 }
 

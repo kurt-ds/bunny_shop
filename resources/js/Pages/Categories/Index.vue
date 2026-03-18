@@ -93,7 +93,8 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex justify-center gap-3">
-                                <button
+                                <Link
+                                    :href="`/categories/${category.id}/edit`"
                                     class="px-4 py-1.5 text-blue-500 rounded-lg hover:text-blue-800 transition-all"
                                 >
                                     <svg
@@ -129,7 +130,7 @@
                                             </g>
                                         </g>
                                     </svg>
-                                </button>
+                                </Link>
                                 <button
                                     @click="
                                         () => {
@@ -220,7 +221,6 @@ const deleteCategory = async (id) => {
 const fetchCategories = async () => {
     try {
         const response = await axios.get("/api/categories");
-
         categories.value = response.data.data;
         console.log(categories.value);
     } catch (error) {
