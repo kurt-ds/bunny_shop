@@ -98,18 +98,33 @@ class BunnyController extends Controller
     }
 
     public function update(Request $request, $id) {
-        //VALIDATION
+    $bunny = Bunny::findOrFail($id);
 
-        $validated = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0|max:99999.99',
-            'age_months' => 'required|numeric|min:0|max:12',
-            'gender' => 'required|in:male,female',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'required|string|max:1000',
-            'is_sold' => 'required|boolean'
-        ]);
+    $validated = $request->validate([
+        'category_id' => 'required|exists:categories,id',
+        'name' => 'required|string|max:255',
+        'price' => 'required|numeric|min:0|max:99999.99',
+        'age_months' => 'required|numeric|min:0|max:240',
+        'gender' => 'required|in:male,female',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'description' => 'required|string|max:1000',
+    ]);
+
+    // 1. Check if a new image file was uploaded
+    if ($request->hasFile('image')) {
+        
+        // 2. Delete the old image if it exists in storage
+        if ($bunny->image_url) {
+            // Assumes image_url is stored as 'bunnies/filename.jpg'
+            Storage::disk('public')->delete($bunny->image_url);
+        }
+
+        // 3. Store the new image and get the path
+        $path = $request->file('image')->store('bunnies', 'public');
+        
+        // 4. Add the new path to the validated data
+        $validated['image_url'] = $path;
+    }
 
         $bunny = Bunny::findOrFail($id);
 
@@ -132,6 +147,12 @@ class BunnyController extends Controller
 
     public function showAddBunny() {
         return Inertia::render('Bunnies/Create');
+    }
+
+    public function showEditBunny($id) {
+        return Inertia::render('Bunnies/Edit', [
+            'id' => $id
+        ]);
     }
 }
 

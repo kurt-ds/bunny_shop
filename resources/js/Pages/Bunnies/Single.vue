@@ -29,9 +29,15 @@
                     {{ bunny.description }}
                 </p>
 
-                <div>
+                <div class="flex gap-2">
+                    <Link
+                        :href="`/bunnies/${bunny.id}/edit`"
+                        class="bg-tertiary text-white py-3 px-5 rounded-md hover:bg-red-400 ease-in text-center"
+                    >
+                        Edit
+                    </Link>
                     <button
-                        class="bg-red-600 text-white p-2 rounded-md hover:bg-red-800 ease-in"
+                        class="bg-red-600 text-white py-3 px-5 rounded-md hover:bg-red-800 ease-in"
                         @click="releaseBunny"
                     >
                         Release
