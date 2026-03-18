@@ -21,7 +21,7 @@
             </div>
 
             <Link
-                href="/categories/new"
+                href="/categories/create"
                 class="bg-tertiary text-white px-4 py-2 font-bold rounded-lg hover:bg-red-400 ease-in text-center"
             >
                 Add Breed
@@ -29,6 +29,15 @@
         </div>
 
         <div
+            v-if="loading"
+            class="flex font-bold items-center justify-center"
+            style="height: 40vh"
+        >
+            Loading from API...
+        </div>
+
+        <div
+            v-else
             class="max-w-4xl mx-auto mt-8 overflow-hidden bg-white shadow-xl rounded-xl border border-gray-100"
         >
             <table class="w-full text-left border-collapse">
