@@ -1,6 +1,7 @@
 <template>
     <Main>
-        <div
+        <form
+            @submit.prevent="handleSubmit"
             class="flex flex-col md:flex-row gap-3 shadow-xl rounded-xl p-6 w-fit mx-auto"
         >
             <div class="flex flex-col gap-3">
@@ -78,13 +79,13 @@ Describe the bunny</textarea
                 >
 
                 <button
-                    @click="handleSubmit"
+                    type="submit"
                     class="bg-tertiary text-white p-3 rounded-xl hover:bg-red-400 font-bold"
                 >
                     Donate
                 </button>
             </div>
-        </div>
+        </form>
     </Main>
 </template>
 
