@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Bunny;
 use Illuminate\Http\Request;
 use App\Http\Resources\CategoryResource;
 use Inertia\Inertia;
@@ -34,6 +35,24 @@ class CategoryController extends Controller
             return response()->json([
                 'message' => 'Failed to add bunny!',
                 'error' => e.getMessage()
+            ], 500);
+        }
+    }
+
+    public function destroy($id) {
+        try {
+            $category = Category::findOrFail($id);
+
+            $category->delete();
+
+            return response()->json([
+                'success'=> true,
+                'message'=> 'Removal of breed is successsful'
+            ]);
+        } catch (e) {
+            return response()->json([
+                'message'=> 'Removal is UNsuccessful',
+                'error'=> e->getMessage()
             ], 500);
         }
     }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('bunnies', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('category_id')->nullable()->onDelete('SET NULL');
             $table->string('name');
             $table->decimal('price', 5, 2);
             $table->integer("age_months");
