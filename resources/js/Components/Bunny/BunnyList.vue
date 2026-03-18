@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="loading"
-        class="font-bold min-h-[50vh] flex items-center justify-center"
+        class="font-bold w-[60vw] min-h-[50vh] flex items-center justify-center"
     >
         Loading from API...
     </div>
@@ -53,7 +53,10 @@
         </div>
     </div>
 
-    <div v-else class="font-bold min-h-[50vh] flex items-center justify-center">
+    <div
+        v-else
+        class="font-bold w-[60vw] min-h-[50vh] flex items-center justify-center"
+    >
         No bunnies in the burrow!
     </div>
 </template>

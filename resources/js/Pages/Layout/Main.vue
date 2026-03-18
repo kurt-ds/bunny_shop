@@ -2,7 +2,7 @@
     <div class="min-h-screen flex flex-col">
         <NavBar />
 
-        <main class="flex-grow container mx-auto p-6">
+        <main class="flex-grow container mx-auto p-12">
             <slot />
         </main>
 

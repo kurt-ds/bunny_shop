@@ -95,5 +95,11 @@ class BunnyController extends Controller
     public function showPage() {
         return Inertia::render('Bunnies/Index');
     }
+
+    public function showBunny($id) {
+        return Inertia::render('Bunnies/Single', [
+            'id' => $id
+        ]);
+    }
 }
 

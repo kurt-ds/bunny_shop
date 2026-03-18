@@ -11,5 +11,6 @@ Route::get('/user', function (Request $request) {
 
 
 Route::get('/bunnies', [BunnyController::class, 'index']);
+Route::get('/bunnies/{bunny}', [BunnyController::class, 'show']);
 
 Route::get('/categories', [CategoryController::class, 'index']);

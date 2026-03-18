@@ -14,13 +14,19 @@
         </p>
         <p class="text-lg font-bold text-tertiary">&dollar;{{ bunny.price }}</p>
 
-        <button class="bg-tertiary text-white font-bold p-2 rounded-lg">
+        <Link
+            :href="`/bunnies/${bunny.id}`"
+            class="bg-tertiary text-white font-bold p-2 rounded-lg text-center"
+        >
             View Details
-        </button>
+        </Link>
     </div>
 </template>
 
 <script setup>
+import axios from "axios";
+import { onMounted } from "vue";
+
 defineProps({
     bunny: Object,
 });
