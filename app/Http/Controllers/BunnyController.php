@@ -6,7 +6,7 @@ use App\Models\Bunny;
 use Illuminate\Http\Request;
 use App\Http\Resources\BunnyResource;
 use Inertia\Inertia;
-use App\Http\Controllers\DB;
+use Illuminate\Support\Facades\Storage;
 
 class BunnyController extends Controller
 {
@@ -76,6 +76,10 @@ class BunnyController extends Controller
     public function destroy($id) {
         try {
             $bunny = Bunny::findOrFail($id);
+
+            if ($bunny->image_url) {
+                Storage::disk('public')->delete($bunny->image_url);
+            }
 
             $bunny->delete();
 
