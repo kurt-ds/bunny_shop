@@ -116,7 +116,8 @@ class BunnyController extends Controller
         // 2. Delete the old image if it exists in storage
         if ($bunny->image_url) {
             // Assumes image_url is stored as 'bunnies/filename.jpg'
-            Storage::disk('public')->delete($bunny->image_url);
+            Storage::disk('public')->delete(
+                $bunny->image_url);
         }
 
         // 3. Store the new image and get the path

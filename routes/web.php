@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BunnyController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 
@@ -9,3 +10,5 @@ Route::get('/', [BunnyController::class, 'showPage'])->name('bunnnies.index');
 Route::get('/bunnies/create', [BunnyController::class, 'showAddBunny']);
 Route::get('/bunnies/{id}/edit', [BunnyController::class, 'showEditBunny']);
 Route::get('/bunnies/{id}', [BunnyController::class, 'showBunny']);
+Route::get('/categories', [CategoryController::class, 'showPage']);
+Route::get('/categories/create', [CategoryController::class, 'showAddCategory']);
