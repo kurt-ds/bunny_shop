@@ -1,6 +1,6 @@
 <template>
     <div
-        class="min-w-[280px] shadow-2xl text-secondary p-4 rounded-xl flex flex-col gap-2"
+        class="w-[280px] shadow-2xl text-secondary p-4 rounded-xl flex flex-col gap-2"
     >
         <img
             :src="`/storage/${bunny.image_url}`"
