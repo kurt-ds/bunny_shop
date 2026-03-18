@@ -28,6 +28,15 @@
                 <p class="leading-relaxed text-gray-700">
                     {{ bunny.description }}
                 </p>
+
+                <div>
+                    <button
+                        class="bg-red-600 text-white p-2 rounded-md hover:bg-red-800 ease-in"
+                        @click="releaseBunny"
+                    >
+                        Release
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -41,6 +50,8 @@
 </template>
 
 <script setup>
+import { router } from "@inertiajs/vue3";
+
 const props = defineProps({
     id: String,
 });
@@ -60,6 +71,23 @@ const fetchBunny = async () => {
         console.log("Failed fetch of bunny: ", error);
     } finally {
         loading.value = false;
+    }
+};
+
+const releaseBunny = async () => {
+    if (confirm("Are you sure you want to release this bunny to the wild?")) {
+        try {
+            const response = await axios.delete(`/api/bunnies/${props.id}`);
+
+            if (response.data.success) {
+                router.visit("/", {
+                    data: { status: "deleted", id: props.id },
+                });
+            }
+        } catch (e) {
+            console.error("Something went wrong", e.response?.data || e);
+            alert("The server refuse to release the bunny!");
+        }
     }
 };
 

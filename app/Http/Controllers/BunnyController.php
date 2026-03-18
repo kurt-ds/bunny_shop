@@ -6,6 +6,7 @@ use App\Models\Bunny;
 use Illuminate\Http\Request;
 use App\Http\Resources\BunnyResource;
 use Inertia\Inertia;
+use App\Http\Controllers\DB;
 
 class BunnyController extends Controller
 {
@@ -59,14 +60,23 @@ class BunnyController extends Controller
         }
 
     public function destroy($id) {
-        $bunny = Bunny::findOrFail($id);
+        try {
+            $bunny = Bunny::findOrFail($id);
 
-        //DELETE THE IMAGE FROM STORAGE FIRST
+            $bunny->delete();
 
-        $bunny->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Bunny released!'
+            ]);
 
-
-        return response()->json(['message' => 'Bunny deleted successfully'], 200);
+        } catch (Exception $e) {
+            // Handle cases where the bunny doesn't exist or deletion fails
+            return response()->json([
+                'message' => 'Failed to delete bunny.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function update(Request $request, $id) {
