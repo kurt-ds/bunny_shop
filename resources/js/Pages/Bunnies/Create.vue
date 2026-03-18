@@ -91,12 +91,14 @@ Describe the bunny</textarea
 <script setup>
 import axios from "axios";
 import Main from "../Layout/Main.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, resolveDirective } from "vue";
 import ImageUploader from "@/Components/ImageUploader.vue";
+import { router } from "@inertiajs/vue3";
 
 const loading = ref(true);
 const categories = ref([]);
 const imageUrl = ref(null);
+const imageFile = ref(null);
 
 const formData = ref({
     category_id: 0,
@@ -109,6 +111,7 @@ const formData = ref({
 });
 
 const updatePreview = (file) => {
+    imageFile.value = file;
     formData.value.image_url = URL.createObjectURL(file);
 };
 
@@ -124,8 +127,32 @@ const fetchCategories = async () => {
     }
 };
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
     console.log(formData);
+
+    const data = new FormData();
+
+    data.append("category_id", formData.value.category_id);
+    data.append("name", formData.value.name);
+    data.append("price", formData.value.price);
+    data.append("age_months", formData.value.age_months);
+    data.append("gender", formData.value.gender);
+    data.append("description", formData.value.description);
+
+    if (imageFile) {
+        data.append("image", imageFile.value);
+    }
+
+    try {
+        const response = await axios.post("/api/bunnies", data);
+
+        console.log("Success", response.data);
+
+        router.visit("/");
+    } catch (e) {
+        console.error("UPload failed", e.response?.data || e.message);
+        alert("Check to form for erros!");
+    }
 };
 
 onMounted(fetchCategories);

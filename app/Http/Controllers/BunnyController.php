@@ -37,26 +37,40 @@ class BunnyController extends Controller
 
     public function store(Request $request): BunnyResource {
         //VALIDATION
+        try {
+            $validated = $request->validate([
+                'category_id' => 'required|exists:categories,id',
+                'name' => 'required|string|max:255',
+                'price' => 'required|numeric|min:0|max:99999.99',
+                'age_months' => 'required|numeric|min:0|max:240',
+                'gender' => 'required|in:male,female',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'description' => 'required|string|max:1000',
+            ]);
 
-        $validated = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0|max:99999.99',
-            'age_months' => 'required|numeric|min:0|max:12',
-            'gender' => 'required|in:male,female',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'required|string|max:1000',
-            'is_sold' => 'required|boolean'
-        ]);
-
-        //Upload the Image to Storage and Get a URL
+            // Check if an image was actually uploaded
+            if ($request->hasFile('image')) {
+                // Store the file in 'storage/app/public/bunnies' 
+                // and get the relative path
+                $path = $request->file('image')->store('bunnies', 'public');
+                
+                // Replace the 'image' value in our validated array with the path
+                $validated['image_url'] = $path;
+            }
 
 
-        //INSERTION
 
-        $bunny = Bunny::create($validated);
+            //INSERTION
 
-        return new BunnyResource($bunny);
+            $bunny = Bunny::create($validated);
+
+            return new BunnyResource($bunny);
+        } catch (e) {
+            return response()->json([
+                'message' => 'Failed to add bunny!',
+                'error' => e.getMessage()
+            ], 500);
+        }
         }
 
     public function destroy($id) {
