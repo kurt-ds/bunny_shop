@@ -16,7 +16,7 @@
         <div class="block nav-links flex gap-3">
             <a
                 v-for="link in links"
-                href="#"
+                href="/"
                 class="block relative text-lg font-medium text-white transition duration-300 ease-in-out group"
             >
                 {{ link }}

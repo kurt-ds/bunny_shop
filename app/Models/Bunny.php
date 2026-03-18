@@ -18,7 +18,6 @@ class Bunny extends Model
         'gender',
         'image_url',
         'description',
-        'is_sold',
     ];
 
     public function casts(): array

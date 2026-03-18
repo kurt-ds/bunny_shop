@@ -111,5 +111,9 @@ class BunnyController extends Controller
             'id' => $id
         ]);
     }
+
+    public function showAddBunny() {
+        return Inertia::render('Bunnies/Create');
+    }
 }
 

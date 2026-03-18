@@ -13,7 +13,7 @@
             <img
                 :src="`/storage/${bunny.image_url}`"
                 :alt="`${bunny.name}'s Image'`"
-                class="h-full object-cover rounded-xl w-full md:w-1/2 md:h-full flex-shrink-0"
+                class="md:h-[400px] object-cover rounded-xl w-full md:w-1/2 flex-shrink-0"
             />
             <div class="flex flex-col gap-2 text-secondary w-full md:w-1/2">
                 <h1 class="font-bold text-2xl">{{ bunny.name }}</h1>
