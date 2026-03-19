@@ -209,8 +209,8 @@ const validate = () => {
 
     if (formData.value.price === "" || formData.value.price === null) {
         e.price = "Price is required.";
-    } else if (formData.value.price < 0) {
-        e.price = "Price must be at least 0.";
+    } else if (formData.value.price <= 0) {
+        e.price = "Price must be more than 0.";
     } else if (formData.value.price > 99999.99) {
         e.price = "Price must not exceed 99,999.99.";
     }
@@ -220,8 +220,8 @@ const validate = () => {
         formData.value.age_months === null
     ) {
         e.age_months = "Age is required.";
-    } else if (formData.value.age_months < 0) {
-        e.age_months = "Age must be at least 0.";
+    } else if (formData.value.age_months <= 0) {
+        e.age_months = "Age must be more than  0.";
     } else if (formData.value.age_months > 240) {
         e.age_months = "Age must not exceed 240 months.";
     }
