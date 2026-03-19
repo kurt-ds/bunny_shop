@@ -1,4 +1,4 @@
- # The Cozy Burrow | Bunny Shop 🐰
+# Bunny Shop 🐰
 
 A full-stack CRUD web application for browsing and managing bunny listings and their breeds. Built with Laravel, Vue 3, Inertia.js, and Tailwind CSS.
 
@@ -18,6 +18,7 @@ A full-stack CRUD web application for browsing and managing bunny listings and t
 | Backend   | Laravel 11, Inertia.js            |
 | Frontend  | Vue 3, Tailwind CSS, Axios        |
 | Database  | MySQL                             |
+| Auth      | Laravel Breeze                    |
 
 ## Requirements
 
@@ -28,15 +29,27 @@ A full-stack CRUD web application for browsing and managing bunny listings and t
 
 ---
 
-## Installation 
+## Installation
+
+Choose the guide that matches your local environment:
+
+- [Laragon (Windows)](#laragon-windows)
+- [Herd (Windows / macOS)](#herd-windows--macos)
+- [XAMPP (Windows / macOS)](#xampp-windows--macos)
+
+---
+
+## Laragon (Windows)
 
 ### 1. Clone the repository
 
+Place the project inside Laragon's web root:
+
 ```bash
+cd C:\laragon\www
 git clone https://github.com/kurt-ds/bunny_shop.git
 cd bunny_shop
 ```
-File location of the folder depends on what local hosting you use. For more information, please go to Local Environment Setups
 
 ### 2. Install dependencies
 
@@ -52,11 +65,13 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-### 4. Configure your database
+### 4. Configure `.env`
 
-Open `.env` and set your database credentials. The default assumes MySQL with no password (standard for local dev tools):
+Open `.env` and set your database credentials (Laragon uses no password by default):
 
 ```env
+APP_URL=http://bunny_shop.test
+
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -65,9 +80,9 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-> Create the `bunny_shop` database first. See the local environment section below for how to do this with your tool.
-
 ### 5. Run migrations and seeders
+
+When prompted to create the database, type `yes`.
 
 ```bash
 php artisan migrate --seed
@@ -75,7 +90,80 @@ php artisan migrate --seed
 
 ### 6. Create the storage symlink
 
-This links `storage/app/public` to `public/storage` so uploaded images are accessible:
+```bash
+php artisan storage:link
+```
+
+### 7. Build frontend assets
+
+```bash
+npm run dev
+```
+
+### 8. Access the app
+
+Laragon auto-creates a virtual host. Open `http://bunny_shop.test` in your browser.
+
+---
+
+## Herd (Windows / macOS)
+
+### 1. Clone the repository
+
+Place the project inside Herd's directory:
+
+```bash
+# Windows
+cd %USERPROFILE%\Herd
+git clone https://github.com/kurt-ds/bunny_shop.git
+
+# macOS
+cd ~/Herd
+git clone https://github.com/kurt-ds/bunny_shop.git
+```
+
+```bash
+cd bunny_shop
+```
+
+### 2. Install dependencies
+
+```bash
+composer install
+npm install
+```
+
+### 3. Set up environment file
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+### 4. Configure `.env`
+
+Open `.env` and set your database credentials (Herd uses no password by default):
+
+```env
+APP_URL=http://bunny_shop.test
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=bunny_shop
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 5. Run migrations and seeders
+
+When prompted to create the database, type `yes`.
+
+```bash
+php artisan migrate --seed
+```
+
+### 6. Create the storage symlink
 
 ```bash
 php artisan storage:link
@@ -83,78 +171,123 @@ php artisan storage:link
 
 ### 7. Build frontend assets
 
-For development (with hot reload):
 ```bash
 npm run dev
 ```
 
-For production:
-```bash
-npm run build
-```
+### 8. Access the app
+
+Herd auto-detects the project. Open `http://bunny_shop.test` in your browser.
 
 ---
 
-## Local Environment Setup
+## XAMPP (Windows / macOS)
 
-### Laragon (Windows)
+> XAMPP requires a few one-time Apache config changes before the app will work correctly. Laravel must be served from the `public/` folder and needs `mod_rewrite` enabled.
 
-1. Place the project folder inside `C:\laragon\www\bunny_shop`
-2. Start Laragon and ensure Apache and MySQL are running
-3. Open **HeidiSQL** (bundled with Laragon) or the Laragon database panel and create a database named `bunny_shop`
-4. Laragon auto-creates a virtual host — access the app at `http://bunny_shop.test`
-5. No password is set by default (`DB_PASSWORD=` can stay empty)
+### 1. Clone the repository
 
-### Herd (macOS)
+Place the project inside XAMPP's web root:
 
-1. Place the project folder inside `~/Herd/bunny_shop`
-2. Start Herd — it auto-detects the project
-3. Create the `bunny_shop` database using a GUI tool like TablePlus, DBngin, or via terminal:
-   ```bash
-   mysql -u root -e "CREATE DATABASE bunny_shop;"
-   ```
-4. Access the app at `http://bunny_shop.test`
-5. Herd uses no password by default (`DB_PASSWORD=` can stay empty)
+```bash
+# Windows
+cd C:\xampp\htdocs
+git clone https://github.com/kurt-ds/bunny_shop.git
 
-### XAMPP (Windows / macOS)
-
-> **Important:** Laravel requires Apache to serve from the `public/` folder and needs `mod_rewrite` enabled. The steps below configure this by pointing XAMPP's document root directly at the project.
-
-#### 1. Place the project
-
-- **Windows:** `C:\xampp\htdocs\bunny_shop`
-- **macOS:** `/Applications/XAMPP/htdocs/bunny_shop`
-
-
-#### 2. Point the document root to the `public` folder
-
-In Xampp, click Config button on the row of Apache, then click the `httpd.conf` file,  CTRL+F to find the `DocumentRoot` and `<Directory>` lines and update them:
-
-**Windows:**
-```apacheconf
-DocumentRoot "C:/xampp/htdocs/bunny_shop/public"
-<Directory "C:/xampp/htdocs/bunny_shop/public">
+# macOS
+cd /Applications/XAMPP/htdocs
+git clone https://github.com/kurt-ds/bunny_shop.git
 ```
 
-**macOS:**
+### 2. Install dependencies
+
+```bash
+cd bunny_shop
+composer install
+npm install
+```
+
+### 3. Configure Apache
+
+Open the XAMPP Control Panel, find the **Apache** row, and click the **Config** button on that row. From the dropdown, click **httpd.conf**. The file will open in a text editor.
+
+**a) Change the DocumentRoot**
+
+Press `Ctrl+F` and search for `DocumentRoot`. You will find a line that looks like this:
+
 ```apacheconf
+DocumentRoot "C:/xampp/htdocs"
+```
+
+Change it to point to the project's `public` folder:
+
+```apacheconf
+# Windows
+DocumentRoot "C:/xampp/htdocs/bunny_shop/public"
+
+# macOS
 DocumentRoot "/Applications/XAMPP/htdocs/bunny_shop/public"
+```
+
+**b) Change the Directory path**
+
+Just below the `DocumentRoot` line, there is a matching `<Directory>` block. Update its path to match:
+
+```apacheconf
+# Windows
+<Directory "C:/xampp/htdocs/bunny_shop/public">
+
+# macOS
 <Directory "/Applications/XAMPP/htdocs/bunny_shop/public">
 ```
 
-#### 3. Create the database
+**c) Save the file and restart Apache** from the XAMPP Control Panel.
 
-Start Apache and MySQL from the XAMPP Control Panel, then open **phpMyAdmin** at `http://localhost/phpmyadmin` and create a database named `bunny_shop`. (Skip if you already run the seeders, if not then rerun the seeders after this point)
+### 4. Set up environment file
 
-#### 4. Restart Apache
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-Restart Apache from the XAMPP Control Panel to apply all config changes.
+### 5. Configure `.env`
 
-#### 5. Access the app
+Open `.env` and set your database credentials (XAMPP uses no password by default):
 
-Open `http://localhost` — this now points directly to the app.
+```env
+APP_URL=http://localhost
 
-> No password is set by default (`DB_PASSWORD=` can stay empty).
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=bunny_shop
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 6. Run migrations and seeders
+
+When prompted to create the database, type `yes`.
+
+```bash
+php artisan migrate --seed
+```
+
+### 7. Create the storage symlink
+
+```bash
+php artisan storage:link
+```
+
+### 8. Build frontend assets
+
+```bash
+npm run dev
+```
+
+### 9. Access the app
+
+Open `http://localhost` in your browser.
 
 ---
 
