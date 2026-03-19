@@ -18,7 +18,6 @@ A full-stack CRUD web application for browsing and managing bunny listings and t
 | Backend   | Laravel 11, Inertia.js            |
 | Frontend  | Vue 3, Tailwind CSS, Axios        |
 | Database  | MySQL                             |
-| Auth      | Laravel Breeze                    |
 
 ## Requirements
 
