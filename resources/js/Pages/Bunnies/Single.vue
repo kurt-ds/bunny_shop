@@ -32,12 +32,12 @@
                 <div class="flex gap-2">
                     <Link
                         :href="`/bunnies/${bunny.id}/edit`"
-                        class="bg-tertiary text-white py-3 px-5 rounded-md hover:bg-red-400 ease-in text-center"
+                        class="bg-tertiary text-white py-3 w-24 rounded-md hover:bg-red-400 ease-in text-center"
                     >
                         Edit
                     </Link>
                     <button
-                        class="bg-red-600 text-white py-3 px-5 rounded-md hover:bg-red-800 ease-in"
+                        class="bg-red-600 text-white py-3 w-24 rounded-md hover:bg-red-800 ease-in"
                         @click="releaseBunny"
                     >
                         Release
@@ -86,6 +86,7 @@ const releaseBunny = async () => {
             const response = await axios.delete(`/api/bunnies/${props.id}`);
 
             if (response.data.success) {
+                alert(`The bunny with id: ${props.id} has been released!`);
                 router.visit("/", {
                     data: { status: "deleted", id: props.id },
                 });

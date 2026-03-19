@@ -33,7 +33,7 @@
                     href="/bunnies/create"
                     class="bg-primary p-3 font-bold text-white mx-auto rounded-md shadow-md hover:bg-cyan-500 ease-in"
                 >
-                    Donate a Bunny
+                    Sell a Bunny
                 </Link>
             </div>
 
