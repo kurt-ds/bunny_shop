@@ -1,5 +1,7 @@
 <template>
-    <div class="rounded-lg shadow-2xl p-5 h-min flex flex-col gap-3 w-96">
+    <div
+        class="rounded-lg shadow-2xl p-5 h-min flex flex-col gap-3 w-fit-content"
+    >
         <input
             v-model="search"
             @change="emitFilters"
@@ -13,7 +15,7 @@
                 @change="emitFilters"
                 name="categoryInput"
                 id="category"
-                class="rounded-md"
+                class="rounded-md w-full max-w-[150px] md:max-w-[200px] truncate"
             >
                 <option v-if="loading" value="" disabled selected>
                     Loading categories...
