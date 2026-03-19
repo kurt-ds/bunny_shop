@@ -69,10 +69,10 @@ class BunnyController extends Controller
             $bunny = Bunny::create($validated);
 
             return new BunnyResource($bunny);
-        } catch (e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Failed to add bunny!',
-                'error' => e.getMessage()
+                'error' => $e->getMessage()
             ], 500);
         }
         }

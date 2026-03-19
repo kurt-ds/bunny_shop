@@ -23,29 +23,49 @@
             Add new Breed
         </div>
 
-        <div class="w-full h-96 flex gap-5 items-center justify-center">
+        <div class="w-96 h-96 mx-auto flex gap-5 items-center justify-center">
             <form
                 @submit.prevent="handleSubmit"
-                class="p-6 shadow-xl rounded-xl flex flex-col gap-5"
+                class="p-6 w-full shadow-xl rounded-xl flex flex-col gap-5"
             >
-                <input
-                    v-model="breedName"
-                    type="text"
-                    placeholder="Breed Name"
-                />
+                <div>
+                    <input
+                        v-model="breedName"
+                        class="w-full"
+                        type="text"
+                        placeholder="Breed Name"
+                        @input="errors.name = ''"
+                        :class="{ 'ring-1 ring-red-500': errors.name }"
+                    />
+                    <p v-if="errors.name" class="text-red-500 text-xs mt-0.5">
+                        {{ errors.name }}
+                    </p>
+                </div>
 
-                <textarea
-                    v-model="description"
-                    name="description"
-                    id="description"
-                    placeholder="Describe the breed here..."
-                ></textarea>
+                <div>
+                    <textarea
+                        v-model="description"
+                        name="description"
+                        id="description"
+                        placeholder="Describe the breed here..."
+                        class="w-full h-24"
+                        @input="errors.description = ''"
+                        :class="{ 'ring-1 ring-red-500': errors.description }"
+                    ></textarea>
+                    <p
+                        v-if="errors.description"
+                        class="text-red-500 text-xs mt-0.5"
+                    >
+                        {{ errors.description }}
+                    </p>
+                </div>
 
                 <button
                     type="submit"
-                    class="p-3 bg-tertiary text-white font-bold rounded-xl hover:bg-red-400 ease-in"
+                    :disabled="submitting"
+                    class="p-3 bg-tertiary text-white font-bold rounded-xl hover:bg-red-400 ease-in disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    ADD
+                    {{ submitting ? "Submitting..." : "ADD" }}
                 </button>
             </form>
         </div>
@@ -60,8 +80,33 @@ import { router } from "@inertiajs/vue3";
 
 const breedName = ref("");
 const description = ref("");
+const errors = ref({});
+const submitting = ref(false);
+
+const validate = () => {
+    const e = {};
+
+    if (!breedName.value?.trim()) {
+        e.name = "Breed name is required.";
+    } else if (breedName.value.length > 255) {
+        e.name = "Breed name must not exceed 255 characters.";
+    }
+
+    if (!description.value?.trim()) {
+        e.description = "Description is required.";
+    } else if (description.value.length > 1000) {
+        e.description = "Description must not exceed 1000 characters.";
+    }
+
+    errors.value = e;
+    return Object.keys(e).length === 0;
+};
 
 const handleSubmit = async () => {
+    if (!validate()) return;
+    if (submitting.value) return;
+    submitting.value = true;
+
     const data = new FormData();
 
     data.append("name", breedName.value);
@@ -75,7 +120,9 @@ const handleSubmit = async () => {
         router.visit("/categories");
     } catch (e) {
         console.error("Breed add failed", e.response?.data || e.message);
-        alert("Check to form for errors!");
+        alert("Check the form for errors!");
+    } finally {
+        submitting.value = false;
     }
 };
 </script>

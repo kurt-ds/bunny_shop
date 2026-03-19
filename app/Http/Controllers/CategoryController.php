@@ -31,10 +31,10 @@ class CategoryController extends Controller
 
             return new CategoryResource($category);
 
-        } catch (e) {
+        } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Failed to add bunny!',
-                'error' => e.getMessage()
+                'message' => 'Failed to add category!',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
@@ -49,10 +49,10 @@ class CategoryController extends Controller
                 'success'=> true,
                 'message'=> 'Removal of breed is successsful'
             ]);
-        } catch (e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'message'=> 'Removal is UNsuccessful',
-                'error'=> e->getMessage()
+                'error'=> $e->getMessage()
             ], 500);
         }
     }
@@ -62,10 +62,10 @@ class CategoryController extends Controller
             $category = Category::findOrFail($id);
 
             return new CategoryResource($category);
-        } catch (e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Fetching category failed!',
-                'error' => e->getMessage()
+                'error' => $e->getMessage()
             ], 500);
         }
     }
@@ -84,10 +84,10 @@ class CategoryController extends Controller
 
             return new CategoryResource($category);
 
-        } catch (e) {
+        } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Failed to update bunny!',
-                'error' => e.getMessage()
+                'message' => 'Failed to update category!',
+                'error' => $e->getMessage()
             ], 500);
         }
     }

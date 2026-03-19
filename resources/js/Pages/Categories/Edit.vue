@@ -49,18 +49,37 @@
                 @submit.prevent="handleSubmit"
                 class="p-6 shadow-xl rounded-xl flex flex-col gap-5"
             >
-                <input
-                    v-model="breedName"
-                    type="text"
-                    placeholder="Breed Name"
-                />
+                <div>
+                    <input
+                        v-model="breedName"
+                        type="text"
+                        placeholder="Breed Name"
+                        @input="errors.name = ''"
+                        class="w-full"
+                        :class="{ 'ring-1 ring-red-500': errors.name }"
+                    />
+                    <p v-if="errors.name" class="text-red-500 text-xs mt-0.5">
+                        {{ errors.name }}
+                    </p>
+                </div>
 
-                <textarea
-                    v-model="description"
-                    name="description"
-                    id="description"
-                    placeholder="Describe the breed here..."
-                ></textarea>
+                <div>
+                    <textarea
+                        v-model="description"
+                        name="description"
+                        id="description"
+                        placeholder="Describe the breed here..."
+                        @input="errors.description = ''"
+                        class="w-full h-24"
+                        :class="{ 'ring-1 ring-red-500': errors.description }"
+                    ></textarea>
+                    <p
+                        v-if="errors.description"
+                        class="text-red-500 text-xs mt-0.5"
+                    >
+                        {{ errors.description }}
+                    </p>
+                </div>
 
                 <button
                     type="submit"
@@ -77,6 +96,7 @@
 const props = defineProps({
     id: String,
 });
+
 import { onMounted, ref } from "vue";
 import Main from "../Layout/Main.vue";
 import axios from "axios";
@@ -86,13 +106,34 @@ const breedName = ref("");
 const description = ref("");
 const category = ref(null);
 const loading = ref(true);
+const errors = ref({});
+
+const validate = () => {
+    const e = {};
+
+    if (!breedName.value?.trim()) {
+        e.name = "Breed name is required.";
+    } else if (breedName.value.length > 255) {
+        e.name = "Breed name must not exceed 255 characters.";
+    }
+
+    if (!description.value?.trim()) {
+        e.description = "Description is required.";
+    } else if (description.value.length > 1000) {
+        e.description = "Description must not exceed 1000 characters.";
+    }
+
+    errors.value = e;
+    return Object.keys(e).length === 0;
+};
 
 const handleSubmit = async () => {
+    if (!validate()) return;
+
     const data = new FormData();
 
     data.append("name", breedName.value);
     data.append("description", description.value);
-
     data.append("_method", "PUT");
 
     try {
@@ -103,13 +144,12 @@ const handleSubmit = async () => {
         router.visit("/categories");
     } catch (e) {
         console.error("Breed update failed", e.response?.data || e.message);
-        alert("Check to form for errors!");
+        alert("Check the form for errors!");
     }
 };
 
 const fetchCategory = async () => {
     try {
-        console.log(props.id);
         const response = await axios.get(`/api/categories/${props.id}`);
 
         category.value = response.data.data;
