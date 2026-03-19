@@ -1,4 +1,4 @@
-# The Cozy Burrow | Bunny Shop 🐰
+ # The Cozy Burrow | Bunny Shop 🐰
 
 A full-stack CRUD web application for browsing and managing bunny listings and their breeds. Built with Laravel, Vue 3, Inertia.js, and Tailwind CSS.
 
@@ -127,7 +127,7 @@ npm run build
 
 #### 2. Point the document root to the `public` folder
 
-In the same `httpd.conf` file, find the `DocumentRoot` and `<Directory>` lines and update them:
+In Xampp, click Config button on the row of Apache, then click the `httpd.conf` file,  CTRL+F to find the `DocumentRoot` and `<Directory>` lines and update them:
 
 **Windows:**
 ```apacheconf
@@ -143,7 +143,7 @@ DocumentRoot "/Applications/XAMPP/htdocs/bunny_shop/public"
 
 #### 3. Create the database
 
-Start Apache and MySQL from the XAMPP Control Panel, then open **phpMyAdmin** at `http://localhost/phpmyadmin` and create a database named `bunny_shop`.
+Start Apache and MySQL from the XAMPP Control Panel, then open **phpMyAdmin** at `http://localhost/phpmyadmin` and create a database named `bunny_shop`. (Skip if you already run the seeders, if not then rerun the seeders after this point)
 
 #### 4. Restart Apache
 
