@@ -25,8 +25,12 @@ class BunnyController extends Controller
                 $query->ofCategory($request->input('category'));
             }
 
+
+            $perPage = $request->integer('per_page', 3);
+            $perPage = max(1, min($perPage, 100));
+
             // 3. Call paginate() on the $query instance that has the filters applied
-            $bunnies = $query->paginate(3)->withQueryString();
+            $bunnies = $query->paginate($perPage)->withQueryString();
 
             return BunnyResource::collection($bunnies);
         }

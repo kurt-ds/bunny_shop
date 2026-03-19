@@ -41,7 +41,9 @@
                 :bunnies="bunnies"
                 :loading="loading"
                 :pagination="paginationMeta"
+                :perPage="perPage"
                 @change-page="fetchBunnies"
+                @update:perPage="handlePerPageChange"
             />
         </div>
     </Main>
@@ -62,18 +64,23 @@ const filters = ref({
     category: null,
 });
 
+const perPage = ref(3);
+
 const fetchBunnies = async (url = "/api/bunnies") => {
     try {
         const response = await axios.get(url, {
             params: {
                 search: filters.value.search,
                 category: filters.value.category,
+                per_page: perPage.value,
             },
         });
         console.log(filters.value.category);
 
         bunnies.value = response.data.data;
         paginationMeta.value = response.data;
+
+        console.log(perPage);
 
         window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
@@ -85,6 +92,11 @@ const fetchBunnies = async (url = "/api/bunnies") => {
 
 const handleFilter = (newFilters) => {
     filters.value = { ...filters.value, ...newFilters };
+    fetchBunnies();
+};
+
+const handlePerPageChange = (newPerPage) => {
+    perPage.value = newPerPage;
     fetchBunnies();
 };
 
