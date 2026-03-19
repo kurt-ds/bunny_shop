@@ -1,4 +1,4 @@
-# Bunny Shop 🐰
+# The Cozy Burrow | Bunny Shop 🐰
 
 A full-stack CRUD web application for browsing and managing bunny listings and their breeds. Built with Laravel, Vue 3, Inertia.js, and Tailwind CSS.
 
