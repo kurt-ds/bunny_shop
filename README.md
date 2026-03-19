@@ -1,4 +1,4 @@
-# The Cozy Burrow | Bunny Shop 🐰
+ # The Cozy Burrow | Bunny Shop 🐰
 
 A full-stack CRUD web application for browsing and managing bunny listings and their breeds. Built with Laravel, Vue 3, Inertia.js, and Tailwind CSS.
 
@@ -117,12 +117,43 @@ npm run build
 
 ### XAMPP (Windows / macOS)
 
-1. Place the project folder inside `C:\xampp\htdocs\bunny_shop` (Windows) or `/Applications/XAMPP/htdocs/bunny_shop` (macOS)
-2. Start Apache and MySQL from the XAMPP Control Panel
-3. Open **phpMyAdmin** at `http://localhost/phpmyadmin` and create a database named `bunny_shop`
-4. Access the app at `http://localhost/bunny_shop/public`
-   - Alternatively, configure a virtual host in Apache for a cleaner URL
-5. No password is set by default (`DB_PASSWORD=` can stay empty)
+> **Important:** Laravel requires Apache to serve from the `public/` folder and needs `mod_rewrite` enabled. The steps below configure this by pointing XAMPP's document root directly at the project.
+
+#### 1. Place the project
+
+- **Windows:** `C:\xampp\htdocs\bunny_shop`
+- **macOS:** `/Applications/XAMPP/htdocs/bunny_shop`
+
+
+#### 2. Point the document root to the `public` folder
+
+In Xampp, click Config button on the row of Apache, then click the `httpd.conf` file,  CTRL+F to find the `DocumentRoot` and `<Directory>` lines and update them:
+
+**Windows:**
+```apacheconf
+DocumentRoot "C:/xampp/htdocs/bunny_shop/public"
+<Directory "C:/xampp/htdocs/bunny_shop/public">
+```
+
+**macOS:**
+```apacheconf
+DocumentRoot "/Applications/XAMPP/htdocs/bunny_shop/public"
+<Directory "/Applications/XAMPP/htdocs/bunny_shop/public">
+```
+
+#### 3. Create the database
+
+Start Apache and MySQL from the XAMPP Control Panel, then open **phpMyAdmin** at `http://localhost/phpmyadmin` and create a database named `bunny_shop`. (Skip if you already run the seeders, if not then rerun the seeders after this point)
+
+#### 4. Restart Apache
+
+Restart Apache from the XAMPP Control Panel to apply all config changes.
+
+#### 5. Access the app
+
+Open `http://localhost` — this now points directly to the app.
+
+> No password is set by default (`DB_PASSWORD=` can stay empty).
 
 ---
 
