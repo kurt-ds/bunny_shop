@@ -1,5 +1,7 @@
 <template>
-    <nav class="bg-primary py-4 px-10 text-white flex justify-between">
+    <nav
+        class="bg-primary py-4 px-10 text-white flex justify-between items-center"
+    >
         <div class="title flex gap-2 items-center">
             <svg
                 viewBox="0 0 24 24"

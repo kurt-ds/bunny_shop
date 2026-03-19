@@ -2,31 +2,36 @@
     <Main>
         <form
             @submit.prevent="handleSubmit"
-            class="flex flex-col md:flex-row gap-3 shadow-xl rounded-xl p-6 w-fit mx-auto"
+            class="flex flex-col md:flex-row gap-6 shadow-xl rounded-xl p-4 md:p-8 w-full max-w-4xl mx-auto bg-white overflow-hidden"
         >
-            <div class="flex flex-col gap-3">
+            >
+            <div class="flex flex-col gap-3 w-full md:w-auto">
                 <ImageUploader @image-selected="updatePreview" />
 
                 <div
                     v-if="formData.image_url"
-                    class="h-96 w-96 flex flex-col justify-center flex-center roundedlg"
+                    class="w-full h-64 md:h-96 md:w-96 flex flex-col justify-center items-center rounded-xl overflow-hidden shadow-inner"
                 >
                     <img
                         :src="formData.image_url"
                         alt="Preview"
-                        class="w-full h-full rounded-xl object-cover"
+                        class="w-full h-full object-cover"
                     />
                 </div>
 
                 <div
                     v-else
-                    class="h-96 w-96 bg-gray-500 flex flex-col justify-center flex-center rounded"
+                    class="w-full h-64 md:h-96 md:w-96 bg-gray-200 flex flex-col justify-center items-center rounded-xl border-2 border-dashed border-gray-400"
                 >
-                    <p class="text-center w-full text-white">Preview</p>
+                    <p class="text-center text-gray-500 font-medium">
+                        Image Preview
+                    </p>
                 </div>
             </div>
 
-            <div class="flex flex-col gap-2 justify-center w-96 mt-7">
+            <div
+                class="flex flex-col gap-2 justify-center w-full max-w-4xl mt-7"
+            >
                 <input v-model="formData.name" type="text" placeholder="Name" />
 
                 <select
@@ -82,7 +87,7 @@ Describe the bunny</textarea
                     type="submit"
                     class="bg-tertiary text-white p-3 rounded-xl hover:bg-red-400 font-bold"
                 >
-                    Donate
+                    Sell
                 </button>
             </div>
         </form>
@@ -102,7 +107,7 @@ const imageUrl = ref(null);
 const imageFile = ref(null);
 
 const formData = ref({
-    category_id: 0,
+    category_id: null,
     name: "",
     price: 0,
     age_months: 0,

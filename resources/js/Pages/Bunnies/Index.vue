@@ -25,7 +25,9 @@
             Explore the Burrow
         </div>
 
-        <div class="flex gap-5">
+        <div
+            class="flex flex-col items-center lg:items-start lg:flex-row gap-5"
+        >
             <div class="flex flex-col gap-5">
                 <FilterSearch @filter-changed="handleFilter" />
 

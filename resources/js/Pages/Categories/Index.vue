@@ -59,7 +59,7 @@
             v-else
             class="max-w-4xl mx-auto mt-8 overflow-hidden bg-white shadow-xl rounded-xl border border-gray-100"
         >
-            <table class="w-full text-left border-collapse">
+            <table class="mx-auto text-left border-collapse">
                 <thead class="bg-gray-50 border-b border-gray-100">
                     <tr>
                         <th
@@ -68,7 +68,7 @@
                             Breed Name
                         </th>
                         <th
-                            class="px-6 py-4 text-sm font-semibold text-gray-700 uppercase tracking-wider"
+                            class="hidden md:table-cell px-6 py-4 text-sm font-semibold text-gray-700 uppercase tracking-wider"
                         >
                             Description
                         </th>
@@ -88,7 +88,9 @@
                         <td class="px-6 py-4 font-medium text-gray-900">
                             {{ category.name }}
                         </td>
-                        <td class="px-6 py-4 text-gray-600 text-sm italic">
+                        <td
+                            class="hidden md:table-cell px-6 py-4 text-gray-600 text-sm italic"
+                        >
                             {{ category.description }}
                         </td>
                         <td class="px-6 py-4">

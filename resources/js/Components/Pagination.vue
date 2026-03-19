@@ -1,12 +1,13 @@
 <template>
-    <div>
-        <div>
+    <div class="flex flex-col gap-2">
+        <div class="flex items-center justify-center gap-4">
             <span class="text-sm text-gray-600">Bunnies per page:</span>
             <select
                 :value="perPage"
                 @change="$emit('update:perPage', Number($event.target.value))"
                 name="perPage"
                 id="perPage"
+                class="appearance-none w-18 border rounded-md bg-white cursor-pointer"
             >
                 <option value="3">3</option>
                 <option value="6">6</option>
