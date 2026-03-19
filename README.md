@@ -1,59 +1,134 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Bunny Shop 🐰
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A full-stack CRUD web application for browsing and managing bunny listings and their breeds. Built with Laravel, Vue 3, Inertia.js, and Tailwind CSS.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Browse, create, edit, and delete bunny listings
+- Manage bunny breeds (categories)
+- Filter by breed and keyword search
+- Server-side pagination with configurable items per page
+- Image upload support
+- Responsive UI
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Layer     | Technology                        |
+|-----------|-----------------------------------|
+| Backend   | Laravel 11, Inertia.js            |
+| Frontend  | Vue 3, Tailwind CSS, Axios        |
+| Database  | MySQL                             |
+| Auth      | Laravel Breeze                    |
 
-## Learning Laravel
+## Requirements
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- PHP >= 8.2
+- Composer
+- Node.js >= 18 & npm
+- MySQL (provided by Laragon, Herd, or XAMPP)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 1. Clone the repository
 
-### Premium Partners
+```bash
+git clone https://github.com/kurt-ds/bunny_shop.git
+cd bunny_shop
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 2. Install dependencies
 
-## Contributing
+```bash
+composer install
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Set up environment file
 
-## Code of Conduct
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4. Configure your database
 
-## Security Vulnerabilities
+Open `.env` and set your database credentials. The default assumes MySQL with no password (standard for local dev tools):
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=bunny_shop
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## License
+> Create the `bunny_shop` database first. See the local environment section below for how to do this with your tool.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 5. Run migrations and seeders
+
+```bash
+php artisan migrate --seed
+```
+
+### 6. Create the storage symlink
+
+This links `storage/app/public` to `public/storage` so uploaded images are accessible:
+
+```bash
+php artisan storage:link
+```
+
+### 7. Build frontend assets
+
+For development (with hot reload):
+```bash
+npm run dev
+```
+
+For production:
+```bash
+npm run build
+```
+
+---
+
+## Local Environment Setup
+
+### Laragon (Windows)
+
+1. Place the project folder inside `C:\laragon\www\bunny_shop`
+2. Start Laragon and ensure Apache and MySQL are running
+3. Open **HeidiSQL** (bundled with Laragon) or the Laragon database panel and create a database named `bunny_shop`
+4. Laragon auto-creates a virtual host — access the app at `http://bunny_shop.test`
+5. No password is set by default (`DB_PASSWORD=` can stay empty)
+
+### Herd (macOS)
+
+1. Place the project folder inside `~/Herd/bunny_shop`
+2. Start Herd — it auto-detects the project
+3. Create the `bunny_shop` database using a GUI tool like TablePlus, DBngin, or via terminal:
+   ```bash
+   mysql -u root -e "CREATE DATABASE bunny_shop;"
+   ```
+4. Access the app at `http://bunny_shop.test`
+5. Herd uses no password by default (`DB_PASSWORD=` can stay empty)
+
+### XAMPP (Windows / macOS)
+
+1. Place the project folder inside `C:\xampp\htdocs\bunny_shop` (Windows) or `/Applications/XAMPP/htdocs/bunny_shop` (macOS)
+2. Start Apache and MySQL from the XAMPP Control Panel
+3. Open **phpMyAdmin** at `http://localhost/phpmyadmin` and create a database named `bunny_shop`
+4. Access the app at `http://localhost/bunny_shop/public`
+   - Alternatively, configure a virtual host in Apache for a cleaner URL
+5. No password is set by default (`DB_PASSWORD=` can stay empty)
+
+---
+
+## Seed Images
+
+The seed bunny images are stored in `storage/app/public/bunnies/` and are included in the repository. After running `php artisan storage:link`, they will be accessible automatically.
+
+Future uploads made through the app are excluded from version control via the folder's `.gitignore`.
