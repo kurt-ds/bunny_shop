@@ -28,7 +28,7 @@ A full-stack CRUD web application for browsing and managing bunny listings and t
 
 ---
 
-## Installation
+## Installation 
 
 ### 1. Clone the repository
 
@@ -36,6 +36,7 @@ A full-stack CRUD web application for browsing and managing bunny listings and t
 git clone https://github.com/kurt-ds/bunny_shop.git
 cd bunny_shop
 ```
+File location of the folder depends on what local hosting you use. For more information, please go to Local Environment Setups
 
 ### 2. Install dependencies
 
